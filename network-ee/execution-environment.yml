@@ -1,0 +1,64 @@
+---
+version: 3
+
+images:
+  base_image:
+    name: quay.io/centos/centos:stream8  # vanilla image!
+    # name: quay.io/centos/centos:stream9  # vanilla image!
+    # name: registry.fedoraproject.org/fedora:38  # vanilla image!
+    # name: registry.access.redhat.com/ubi9/ubi:latest  # vanilla image!
+
+options:
+  user: '1000'  # (optional) sets the username or UID
+  # tags:  # (optional) sets tags
+  #   - 'network-ee:latest'
+
+dependencies:
+  python_interpreter:
+    package_system: python38  # (optional) name of a Python interpreter OS package to install
+    python_path: /usr/bin/python3.8  # (optional) path to the Python interpreter to use
+
+  # ansible_core:  # (optional) install ansible-core if the base image doesn't already contain it
+  #   package_pip: https://github.com/ansible/ansible/archive/refs/tags/v2.13.2.tar.gz   # install from a GH ref tarball
+  ansible_core:
+      package_pip: ansible-core>=2.12
+
+  ansible_runner:
+    package_pip: ansible-runner
+
+  # lists of Ansible collections and/or roles to install (or the filename of an Ansible Galaxy CLI requirements YAML file)
+
+  # the contents of this key are not validated by ansible-builder itself; they will be written to `requirements.yml` in
+  # the root of the generated build context and consumed directly by the ansible-galaxy CLI during the build
+  galaxy:
+    collections:
+      - ansible.utils
+      - ansible.netcommon
+      # - ansible.network
+      - cisco.aci
+      - cisco.ios
+      - cisco.iosxr
+      - cisco.nxos
+      - dellemc.enterprise_sonic
+      - netbox.netbox
+      - vyos.vyos
+      - community.hashi_vault
+
+# The Ansible ansible.network collection is a meta collection that install all the following network supported content collections.
+# - ansible.netcommon
+# - ansible.network
+# - ansible.utils
+# - arista.eos
+# - cisco.ios
+# - cisco.iosxr
+# - cisco.nxos
+# - frr.frr
+# - junipernetworks.junos
+# - openvswitch.openvswitch
+# - vyos.vyos
+
+  # python:
+  #   - pywinrm
+
+  system:
+    - iputils [platform:rpm]

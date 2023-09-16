@@ -36,3 +36,6 @@ venv/
 # Demo files
 /demo/artifacts
 /demo/daemon.log
+
+# Build-time temporary files
+/**/context
