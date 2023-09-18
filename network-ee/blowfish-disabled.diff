@@ -1,0 +1,14 @@
+218,223c218,223
+<         "blowfish-cbc": {
+<             "class": algorithms.Blowfish,
+<             "mode": modes.CBC,
+<             "block-size": 8,
+<             "key-size": 16,
+<         },
+---
+>         # "blowfish-cbc": {
+>         #     "class": algorithms.Blowfish,
+>         #     "mode": modes.CBC,
+>         #     "block-size": 8,
+>         #     "key-size": 16,
+>         # },

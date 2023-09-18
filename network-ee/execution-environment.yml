@@ -8,6 +8,16 @@ images:
     # name: registry.fedoraproject.org/fedora:38  # vanilla image!
     # name: registry.access.redhat.com/ubi9/ubi:latest  # vanilla image!
 
+additional_build_steps:
+  append_final: |
+    COPY blowfish-disabled.diff /tmp/src/
+    RUN \
+      if [ -f /usr/local/lib/python3.8/site-packages/paramiko/transport.py ]; \
+      then \
+        patch /usr/local/lib/python3.8/site-packages/paramiko/transport.py /tmp/src/blowfish-disabled.diff; \
+      fi && \
+      rm /tmp/src/blowfish-disabled.diff
+
 options:
   user: '1000'  # (optional) sets the username or UID
   # tags:  # (optional) sets tags
@@ -61,4 +71,5 @@ dependencies:
   #   - pywinrm
 
   system:
+    - patch [platform:rpm]
     - iputils [platform:rpm]
